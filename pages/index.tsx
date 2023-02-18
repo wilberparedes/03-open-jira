@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
+import { Typography } from '@mui/material'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const HomePage = () => {
   return (
     <>
-      <h1>Hola Mundo</h1>
+      <Typography variant='h1' color={'primary'}>
+        Hola Mundo
+      </Typography>
     </>
   )
 }
