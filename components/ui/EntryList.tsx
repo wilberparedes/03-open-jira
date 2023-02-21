@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo } from 'react'
+import { DragEvent, FC, useContext, useMemo } from 'react'
 
 import { List, Paper } from '@mui/material'
 
@@ -19,9 +19,17 @@ export const EntryList: FC<Props> = ({ status }) => {
     [entries]
   ) //TODO: ayuda a que react no esté haciendo muchas renderizaciones
 
+  const allowDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+  }
+
+  const onDropEntry = (event: DragEvent<HTMLDivElement>) => {
+    const id = event.dataTransfer.getData('text')
+    console.log('id', id)
+  }
   return (
     //TODO: aqui haremos drop
-    <div>
+    <div onDrop={onDropEntry} onDragOver={allowDrop}>
       <Paper
         sx={{
           height: 'calc(100vh - 210px)',
