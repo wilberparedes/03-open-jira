@@ -30,7 +30,7 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
     const newEntry: Entry = {
       _id: uuidv4(),
       description,
-      createAt: Date.now(),
+      createdAt: Date.now(),
       status: 'pending',
     }
     dispatch({ type: '[Entry] Add-Entry', payload: newEntry })
