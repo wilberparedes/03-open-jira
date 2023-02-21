@@ -3,6 +3,7 @@ import { UIState } from './'
 type UIActionType =
   | { type: 'UI - Open Sidebar' }
   | { type: 'UI - Close Sidebar' }
+  | { type: '[UI] - Toogle-Adding-Entry' }
 
 export const uiReducer = (state: UIState, action: UIActionType): UIState => {
   switch (action.type) {
@@ -15,6 +16,11 @@ export const uiReducer = (state: UIState, action: UIActionType): UIState => {
       return {
         ...state,
         sidemenuOpen: false,
+      }
+    case '[UI] - Toogle-Adding-Entry':
+      return {
+        ...state,
+        isAddingEntry: !state.isAddingEntry,
       }
     default:
       return state

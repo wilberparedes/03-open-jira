@@ -11,10 +11,11 @@ import { createContext } from 'react'
 // este no es el estado inicial del contexto
 export interface ContextProps {
   sidemenuOpen: boolean
-
+  isAddingEntry: boolean
   //Methods
   openSideMenu: () => void
   closeSideMenu: () => void
+  toogleAddingEntry: () => void
 }
 
 export const UIContext = createContext({} as ContextProps)

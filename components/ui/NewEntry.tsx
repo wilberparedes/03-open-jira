@@ -5,12 +5,12 @@ import { Box, Button, TextField } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import AddIcon from '@mui/icons-material/AddCircleOutlineOutlined'
 
-import { EntriesContext } from '@/context'
+import { EntriesContext, UIContext } from '@/context'
 
 export const NewEntry = () => {
   const { addNewEntry } = useContext(EntriesContext)
+  const { isAddingEntry, toogleAddingEntry } = useContext(UIContext)
 
-  const [isAdding, setIsAdding] = useState<boolean>(false)
   const [inputValue, setInputValue] = useState<string>('')
   const [touched, setTouched] = useState<boolean>(false)
 
@@ -24,14 +24,18 @@ export const NewEntry = () => {
     }
 
     addNewEntry(inputValue)
-    setInputValue('')
-    setIsAdding(false)
     setTouched(false)
+    setInputValue('')
+    toogleAddingEntry()
+  }
+
+  const onCancel = () => {
+    toogleAddingEntry()
   }
 
   return (
     <Box sx={{ marginBottom: 2, paddingX: 1 }}>
-      {isAdding ? (
+      {isAddingEntry ? (
         <>
           <TextField
             fullWidth
@@ -40,13 +44,13 @@ export const NewEntry = () => {
             autoFocus
             multiline
             label='Nueva entrada'
-            error={!inputValue.length && touched}
+            error={isAddingEntry && !inputValue.length && touched}
             helperText={!inputValue.length && touched && 'Ingrese un valor'}
             onChange={onTextFieldChanged}
             onBlur={() => setTouched(true)}
           />
           <Box display={'flex'} justifyContent='space-between'>
-            <Button variant='text' onClick={() => setIsAdding(false)}>
+            <Button variant='text' onClick={onCancel}>
               Cancelar
             </Button>
             <Button
@@ -64,7 +68,7 @@ export const NewEntry = () => {
           startIcon={<AddIcon />}
           fullWidth
           variant='outlined'
-          onClick={() => setIsAdding(true)}
+          onClick={toogleAddingEntry}
         >
           Agregar Tarea
         </Button>
