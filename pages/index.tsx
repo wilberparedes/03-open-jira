@@ -3,16 +3,17 @@ import { NextPage } from 'next'
 import { Card, CardHeader, Grid } from '@mui/material'
 
 import { Layout } from '@/components/layouts'
-import { EntryList } from '../components/ui/EntryList'
+import { NewEntry, EntryList } from '@/components/ui'
 
 const HomePage: NextPage = () => {
   return (
     <Layout title='Home - OpenJira'>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} padding={1}>
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title='Pendientes' />
             {/* Agregar una nueva entra */}
+            <NewEntry />
             {/* Listado de las entradas */}
             <EntryList status='pending' />
           </Card>
