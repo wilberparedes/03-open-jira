@@ -1,10 +1,9 @@
 import { FC, PropsWithChildren, useEffect, useReducer } from 'react'
 
-import { v4 as uuidv4 } from 'uuid'
-
 import { Entry } from '@/interfaces'
-import { EntriesContext, entriesReducer } from './'
 import { entriesApi } from '@/apis'
+
+import { EntriesContext, entriesReducer } from './'
 
 export interface EntriesState {
   entries: Entry[]
@@ -35,8 +34,16 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
     } catch (error) {}
   }
 
-  const updateEntry = (entry: Entry) => {
-    dispatch({ type: '[Entry] Entry-Updated', payload: entry })
+  const updateEntry = async ({ _id, description, status }: Entry) => {
+    try {
+      const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
+        description,
+        status,
+      })
+      dispatch({ type: '[Entry] Entry-Updated', payload: data })
+    } catch (error) {
+      console.log({ error })
+    }
   }
 
   return (
