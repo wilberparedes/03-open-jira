@@ -26,7 +26,7 @@ export default function entries(
 const getEntries = async (res: NextApiResponse<Data>) => {
   await db.connect()
 
-  const entries = await EntryModel.find().sort({ createdAt: 'desc' })
+  const entries = await EntryModel.find().sort({ createdAt: 'asc' })
 
   await db.disconnect()
 
