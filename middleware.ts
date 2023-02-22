@@ -1,18 +1,23 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { ENTRIESAPI_ENDPOINTS } from './apis'
+
+const headers = { 'content-type': 'application/json' }
+const checkMongoIDRegExp = new RegExp('^[0-9a-fA-F]{24}$')
 
 export function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith('/api/entries/')) {
-    const id = req.nextUrl.pathname.replace('/api/entries/', '')
-    console.log({ id })
-    const checkMongoIDRegExp = new RegExp('^[0-9a-fA-F]{24}$')
+  if (req.nextUrl.pathname.startsWith(ENTRIESAPI_ENDPOINTS.entries.url)) {
+    const id = req.nextUrl.pathname.replace(
+      ENTRIESAPI_ENDPOINTS.entries.url,
+      ''
+    )
     if (!checkMongoIDRegExp.test(id)) {
       return new NextResponse(
         JSON.stringify({
           success: false,
           message: `${id} is not a valid MongoID`,
         }),
-        { status: 400, headers: { 'content-type': 'application/json' } }
+        { status: 400, headers }
       )
       /**
        * const url = req.nextUrl.clone()
