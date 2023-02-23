@@ -17,14 +17,19 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 
 import { Layout } from '@/components/layouts'
 import { EntryStatus } from '@/interfaces'
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useMemo } from 'react'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 export const EntryPage = () => {
   const [inputValue, setInputValue] = useState('')
   const [status, setStatus] = useState<EntryStatus>('pending')
-  const [touced, setTouced] = useState(false)
+  const [touched, setTouched] = useState(false)
+
+  const isNotValid = useMemo(
+    () => !inputValue.length && touched,
+    [inputValue, touched]
+  )
 
   const onTextFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value)
@@ -55,7 +60,10 @@ export const EntryPage = () => {
                 multiline
                 label='Nueva entrada'
                 value={inputValue}
+                onBlur={() => setTouched(true)}
                 onChange={onTextFieldChanged}
+                helperText={isNotValid && 'Ingrese un valor'}
+                error={isNotValid}
               />
               {/* RADIO */}
               <FormControl>
@@ -78,6 +86,7 @@ export const EntryPage = () => {
                 variant='contained'
                 fullWidth
                 onClick={onSave}
+                disabled={!inputValue.length}
               >
                 Guardar
               </Button>
