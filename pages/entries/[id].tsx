@@ -17,17 +17,33 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 
 import { Layout } from '@/components/layouts'
 import { EntryStatus } from '@/interfaces'
+import { useState, ChangeEvent } from 'react'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
 export const EntryPage = () => {
+  const [inputValue, setInputValue] = useState('')
+  const [status, setStatus] = useState<EntryStatus>('pending')
+  const [touced, setTouced] = useState(false)
+
+  const onTextFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value)
+  }
+
+  const onStatusChanged = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    setStatus(event.target.value as EntryStatus)
+  }
+
+  const onSave = () => {}
+
   return (
     <Layout>
       <Grid container justifyContent={'center'} sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={8} md={6}>
           <Card>
             <CardHeader
-              title='Entrada:'
+              title={`Entrada: ${inputValue}`}
               subheader={`Creada hace: ... minutos`}
             />
             <CardContent>
@@ -38,17 +54,19 @@ export const EntryPage = () => {
                 autoFocus
                 multiline
                 label='Nueva entrada'
+                value={inputValue}
+                onChange={onTextFieldChanged}
               />
               {/* RADIO */}
               <FormControl>
                 <FormLabel>Estado:</FormLabel>
-                <RadioGroup row>
-                  {validStatus.map((status) => (
+                <RadioGroup row value={status} onChange={onStatusChanged}>
+                  {validStatus.map((option) => (
                     <FormControlLabel
-                      key={status}
-                      value={status}
+                      key={option}
+                      value={option}
                       control={<Radio />}
-                      label={capitalize(status)}
+                      label={capitalize(option)}
                     />
                   ))}
                 </RadioGroup>
@@ -59,6 +77,7 @@ export const EntryPage = () => {
                 startIcon={<SaveOutlinedIcon />}
                 variant='contained'
                 fullWidth
+                onClick={onSave}
               >
                 Guardar
               </Button>
