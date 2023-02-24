@@ -20,7 +20,6 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import { Layout } from '@/components/layouts'
 import { Entry, EntryStatus } from '@/interfaces'
 import { useState, ChangeEvent, useMemo, FC } from 'react'
-import { isValidObjectId } from 'mongoose'
 import { dbEntries } from '@/database'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
@@ -29,10 +28,9 @@ interface Props {
   entry: Entry
 }
 
-export const EntryPage: FC<Props> = (props) => {
-  console.log({ props })
-  const [inputValue, setInputValue] = useState('')
-  const [status, setStatus] = useState<EntryStatus>('pending')
+export const EntryPage: FC<Props> = ({ entry }) => {
+  const [inputValue, setInputValue] = useState<string>(entry.description)
+  const [status, setStatus] = useState<EntryStatus>(entry.status)
   const [touched, setTouched] = useState(false)
 
   const isNotValid = useMemo(
@@ -52,13 +50,13 @@ export const EntryPage: FC<Props> = (props) => {
   const onSave = () => {}
 
   return (
-    <Layout>
+    <Layout title={`${inputValue.substring(0, 20)}...`}>
       <Grid container justifyContent={'center'} sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={8} md={6}>
           <Card>
             <CardHeader
-              title={`Entrada: ${inputValue}`}
-              subheader={`Creada hace: ... minutos`}
+              title={`Entrada:`}
+              subheader={`Creada hace: ${entry.createdAt} minutos`}
             />
             <CardContent>
               <TextField
@@ -122,7 +120,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 
   return {
-    props: { entry },
+    props: { entry: { ...entry, _id: entry._id.toString() } },
   }
 }
 
