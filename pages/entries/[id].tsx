@@ -1,3 +1,5 @@
+import { GetServerSideProps } from 'next'
+
 import {
   Grid,
   Card,
@@ -17,11 +19,13 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 
 import { Layout } from '@/components/layouts'
 import { EntryStatus } from '@/interfaces'
-import { useState, ChangeEvent, useMemo } from 'react'
+import { useState, ChangeEvent, useMemo, FC } from 'react'
+import { isValidObjectId } from 'mongoose'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
-export const EntryPage = () => {
+export const EntryPage: FC = (props) => {
+  console.log({ props })
   const [inputValue, setInputValue] = useState('')
   const [status, setStatus] = useState<EntryStatus>('pending')
   const [touched, setTouched] = useState(false)
@@ -96,6 +100,23 @@ export const EntryPage = () => {
       </Grid>
     </Layout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { id } = params as { id: string }
+
+  if (!isValidObjectId(id)) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: { id },
+  }
 }
 
 export default EntryPage
