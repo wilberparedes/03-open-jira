@@ -18,13 +18,18 @@ import {
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 
 import { Layout } from '@/components/layouts'
-import { EntryStatus } from '@/interfaces'
+import { Entry, EntryStatus } from '@/interfaces'
 import { useState, ChangeEvent, useMemo, FC } from 'react'
 import { isValidObjectId } from 'mongoose'
+import { dbEntries } from '@/database'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
-export const EntryPage: FC = (props) => {
+interface Props {
+  entry: Entry
+}
+
+export const EntryPage: FC<Props> = (props) => {
   console.log({ props })
   const [inputValue, setInputValue] = useState('')
   const [status, setStatus] = useState<EntryStatus>('pending')
@@ -105,7 +110,9 @@ export const EntryPage: FC = (props) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params as { id: string }
 
-  if (!isValidObjectId(id)) {
+  const entry = await dbEntries.getEntryById(id)
+
+  if (!entry) {
     return {
       redirect: {
         destination: '/',
@@ -115,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 
   return {
-    props: { id },
+    props: { entry },
   }
 }
 
