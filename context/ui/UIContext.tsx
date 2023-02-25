@@ -9,7 +9,7 @@ import { createContext } from 'react'
 * poder decirle a los componentes de que información dispone si se está importanto este contexto */
 
 // este no es el estado inicial del contexto
-export interface ContextProps {
+interface ContextProps {
   sidemenuOpen: boolean
   isAddingEntry: boolean
   isDragging: boolean

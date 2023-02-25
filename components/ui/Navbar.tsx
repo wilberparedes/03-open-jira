@@ -16,10 +16,8 @@ export const Navbar: FC = () => {
         <IconButton size='large' edge='start' onClick={openSideMenu}>
           <MenuOutlinedIcon />
         </IconButton>
-        <NextLink href='/'>
-          <Link underline='none' color='white'>
-            <Typography variant='h6'>OpenJira</Typography>
-          </Link>
+        <NextLink href='/' style={{ color: 'white', textDecoration: 'none' }}>
+          <Typography variant='h6'>OpenJira</Typography>
         </NextLink>
       </Toolbar>
     </AppBar>

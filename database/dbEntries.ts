@@ -1,5 +1,6 @@
-import { EntryModel, IEntry } from '@/models'
 import { isValidObjectId } from 'mongoose'
+
+import { EntryModel, IEntry } from '@/models'
 import { db } from '.'
 
 export const getEntryById = async (id: string): Promise<IEntry | null> => {

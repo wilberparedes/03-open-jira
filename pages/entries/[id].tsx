@@ -1,5 +1,9 @@
-import { GetServerSideProps } from 'next'
+import { useState, ChangeEvent, useMemo, FC, useContext } from 'react'
 
+import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+
+import { blue } from '@mui/material/colors'
 import {
   Grid,
   Card,
@@ -21,11 +25,9 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 import { Layout } from '@/components/layouts'
 import { Entry, EntryStatus } from '@/interfaces'
-import { useState, ChangeEvent, useMemo, FC, useContext } from 'react'
 import { dbEntries } from '@/database'
-import { EntriesContext } from '../../context/entries/EntriesContext'
+import { EntriesContext } from '@/context/'
 import { dateFunctions } from '@/utils'
-import { useRouter } from 'next/router'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
@@ -75,7 +77,17 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     <Layout title={`${inputValue.substring(0, 20)}...`}>
       <Grid container justifyContent={'center'} sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={8} md={6}>
-          <Card>
+          <Card
+            sx={{
+              height: '100%',
+              padding: 1,
+              backgroundColor: blue[50],
+              borderWidth: 0.1,
+              borderColor: blue[50],
+              borderStyle: 'solid',
+              borderRadius: 2,
+            }}
+          >
             <CardHeader
               title={`Entrada:`}
               subheader={`Creada ${dateFunctions.getFormatDistanceToNow(

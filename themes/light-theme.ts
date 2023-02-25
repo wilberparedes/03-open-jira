@@ -1,20 +1,24 @@
 import { createTheme, IconButton } from '@mui/material'
-import { grey, red } from '@mui/material/colors'
+import { blueGrey, grey, red } from '@mui/material/colors'
 
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: grey[300],
+      default: 'white',
     },
     primary: {
-      main: '#4a148c',
+      main: '#2196f3',
     },
     secondary: {
       main: '#19857b',
     },
     error: {
       main: red.A400,
+    },
+    text: {
+      primary: blueGrey[800],
+      secondary: grey[800],
     },
   },
   components: {
@@ -23,6 +27,10 @@ export const lightTheme = createTheme({
         elevation: 0,
       },
     },
-    MuiToolbar: {},
+    MuiCard: {
+      defaultProps: {
+        elevation: 0,
+      },
+    },
   },
 })

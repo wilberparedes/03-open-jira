@@ -9,6 +9,7 @@ import {
   CardContent,
   Typography,
 } from '@mui/material'
+import { grey } from '@mui/material/colors'
 
 import { Entry } from '@/interfaces'
 import { UIContext } from '@/context'
@@ -39,14 +40,20 @@ export const EntryCard: FC<Props> = ({ entry }) => {
   return (
     <Card
       onClick={onClick}
-      sx={{ marginBottom: 1 }}
+      sx={{
+        marginBottom: 1,
+        borderWidth: '0.1px',
+        borderStyle: 'solid',
+        borderColor: grey[100],
+        borderRadius: 2,
+      }}
       draggable
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
     >
       <CardActionArea>
         <CardContent>
-          <Typography sx={{ whiteSpace: 'pre-line' }}>
+          <Typography sx={{ whiteSpace: 'pre-line', color: 'text.secondary' }}>
             {entry.description}
           </Typography>
         </CardContent>

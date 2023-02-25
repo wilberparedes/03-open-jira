@@ -1,6 +1,7 @@
-import { db } from '@/database'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { EntryModel, IEntry } from '../../../models/'
+
+import { db } from '@/database'
+import { EntryModel, IEntry } from '@/models/'
 
 type Data =
   | {
