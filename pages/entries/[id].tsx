@@ -52,7 +52,6 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   }
 
   const onStatusChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
     setStatus(event.target.value as EntryStatus)
   }
 

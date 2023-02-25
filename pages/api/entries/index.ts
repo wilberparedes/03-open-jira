@@ -49,6 +49,7 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(201).json(newEntry)
   } catch (error) {
     await db.disconnect()
+    // eslint-disable-next-line no-console
     console.log(`Error In: [postEntry] ${error}`)
     return res
       .status(500)

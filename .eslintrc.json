@@ -35,7 +35,8 @@
     "react/jsx-curly-spacing": [2, "never"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "react/prop-types": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   },
   "settings": {
     "react": {
