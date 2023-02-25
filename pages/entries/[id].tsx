@@ -14,8 +14,10 @@ import {
   FormControlLabel,
   Radio,
   capitalize,
+  IconButton,
 } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 
 import { Layout } from '@/components/layouts'
 import { Entry, EntryStatus } from '@/interfaces'
@@ -23,6 +25,7 @@ import { useState, ChangeEvent, useMemo, FC, useContext } from 'react'
 import { dbEntries } from '@/database'
 import { EntriesContext } from '../../context/entries/EntriesContext'
 import { dateFunctions } from '@/utils'
+import { useRouter } from 'next/router'
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'finished']
 
@@ -31,7 +34,8 @@ interface Props {
 }
 
 export const EntryPage: FC<Props> = ({ entry }) => {
-  const { updateEntry } = useContext(EntriesContext)
+  const router = useRouter()
+  const { updateEntry, deleteEntry } = useContext(EntriesContext)
   const [inputValue, setInputValue] = useState<string>(entry.description)
   const [status, setStatus] = useState<EntryStatus>(entry.status)
   const [touched, setTouched] = useState(false)
@@ -60,6 +64,11 @@ export const EntryPage: FC<Props> = ({ entry }) => {
       description: inputValue,
     }
     updateEntry(updatedEntry, true)
+  }
+
+  const onDelete = () => {
+    deleteEntry(entry._id)
+    router.push('/')
   }
 
   return (
@@ -116,6 +125,18 @@ export const EntryPage: FC<Props> = ({ entry }) => {
           </Card>
         </Grid>
       </Grid>
+
+      <IconButton
+        sx={{
+          position: 'fixed',
+          bottom: 30,
+          right: 30,
+          backgroundColor: 'error.dark',
+        }}
+        onClick={onDelete}
+      >
+        <DeleteOutlineOutlinedIcon />
+      </IconButton>
     </Layout>
   )
 }

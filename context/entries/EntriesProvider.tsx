@@ -64,12 +64,30 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }
 
+  const deleteEntry = async (id: string) => {
+    try {
+      const { data } = await entriesApi.delete<Entry>(`/entries/${id}`)
+      dispatch({ type: '[Entry] Entry-Delete', payload: data._id })
+      enqueueSnackbar('Entrada eliminada', {
+        variant: 'success',
+        autoHideDuration: 1500,
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'right',
+        },
+      })
+    } catch (error) {
+      console.log({ error })
+    }
+  }
+
   return (
     <EntriesContext.Provider
       value={{
         ...state,
         addNewEntry,
         updateEntry,
+        deleteEntry,
       }}
     >
       {children}
