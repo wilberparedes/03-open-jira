@@ -25,6 +25,7 @@ const HomePage: NextPage = () => {
               borderColor: blue[50],
               borderStyle: 'solid',
               borderRadius: 2,
+              minHeight: 'calc(100vh - 100px)',
             }}
           >
             <CardHeader title='Pendientes' />
