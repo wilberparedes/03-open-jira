@@ -61,6 +61,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await db.disconnect()
     res.status(200).json(updatedEntry!)
   } catch (error: any) {
+    // eslint-disable-next-line no-console
     console.log(`Error In: [entryToUpdate] ${error}`)
     await db.disconnect()
     return res.status(400).json({ message: error.errors.status.message })
@@ -82,6 +83,9 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       res.status(200).json(getedEntry!)
     }
   } catch (error: any) {
+    await db.disconnect()
+    // eslint-disable-next-line no-console
+    console.log(`Error In: [getEntry] ${error}`)
     return res.status(400).json({ message: error.errors.status.message })
   }
 }
@@ -101,6 +105,8 @@ const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
   } catch (error: any) {
     await db.disconnect()
+    // eslint-disable-next-line no-console
+    console.log(`Error In: [deleteEntry] ${error}`)
     return res.status(400).json({ message: error.errors.status.message })
   }
 }
