@@ -103,8 +103,6 @@ const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
   } catch (error: any) {
     await db.disconnect()
-    // eslint-disable-next-line no-console
-    console.log(`Error in: [deleteEntry] ${error}`)
     return res.status(400).json({ message: error.errors.status.message })
   }
 }
